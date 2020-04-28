@@ -1,0 +1,40 @@
+{
+  "name": "nut-http",
+  "version": "1.0.0",
+  "description": "An API wrapper that serves the upsc output",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint .",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dietah/nut-http.git"
+  },
+  "keywords": [
+    "nut",
+    "json",
+    "upsc",
+    "ups"
+  ],
+  "author": "Dieter Verschueren",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dietah/nut-http/issues"
+  },
+  "homepage": "https://github.com/dietah/nut-http#readme",
+  "dependencies": {
+    "envalid": "^6.0.1",
+    "log4js": "^6.2.1",
+    "moment": "^2.24.0",
+    "moment-duration-format": "^2.3.2",
+    "restify": "^8.5.1",
+    "stereotype": "^1.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2"
+  }
+}
