@@ -1,5 +1,5 @@
 lint:
 	npm run lint
 
-ocker:
+docker:
 	docker build -t nut-http .
