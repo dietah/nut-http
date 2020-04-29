@@ -10,6 +10,15 @@ logger.info('environment variables:\n', config);
 // nut settings
 const nut = new NUT(config.NUT_PORT, config.NUT_ADDRESS);
 
+// https://networkupstools.org/docs/man/genericups.html
+const statusses = Object.freeze({
+	OL: 1, // online
+    OB: 2, // on battery
+	LB: 3, // low battery,
+	SD: 4, // shutdown load
+	CP: 5 // cable power
+});
+
 // api settings
 const server = restify.createServer();
 server.server.setTimeout(config.SERVER_TIMEOUT);
@@ -69,7 +78,10 @@ server.get('/devices/:name', (req, res) => {
 	nut
 	.getUpsVars(ups)
 	.then((vars) => {
-		if (req.query.parsed && req.query.parsed === 'true') vars = parseUpsVars(vars);
+		if (req.query.parsed && req.query.parsed === 'true') {
+			vars = parseUpsVars(vars);
+			vars.ups.statusnum = statusses[vars.ups.status];
+		}
 
 		const endDateTime = moment();
 		logger.debug(`processing took ${time(startDateTime, endDateTime)}`);
