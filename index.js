@@ -13,10 +13,10 @@ const nut = new NUT(config.NUT_PORT, config.NUT_ADDRESS);
 // https://networkupstools.org/docs/man/genericups.html
 const statusses = Object.freeze({
 	OL: 1, // online
-    'OB DISCHRG': 2, // on battery
-	LB: 3, // low battery,
-	SD: 4, // shutdown load
-	CP: 5 // cable power
+	'OL CHRG': 2, // online & charging
+    'OB DISCHRG': 3, // on battery
+	LB: 4, // low battery,
+	SD: 5 // shutdown load
 });
 
 // api settings
