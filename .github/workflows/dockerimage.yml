@@ -6,6 +6,7 @@ on:
       - master
     paths:
       - "*.js"
+      - "package*.json"
       - "Dockerfile"
 
 jobs:

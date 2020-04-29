@@ -5,7 +5,7 @@ const { parseList, time, parseUpsVars } = require('./helpers');
 const NUT = require('./node-nut');
 const config = require('./env');
 
-logger.info('Environment variables:\n', config);
+logger.info('environment variables:\n', config);
 
 // nut settings
 const nut = new NUT(config.NUT_PORT, config.NUT_ADDRESS);
