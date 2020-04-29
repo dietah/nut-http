@@ -156,8 +156,17 @@ class Nut extends EventEmitter {
      */
     getUpsVars(ups, callback) {
         return this._callbackOrPromise(callback, callback => {
+            /* After building the docker container on my Pi I noticed only chucks of data being return in the callback.
+               I did notice that the send "LIST VAR" and the "END LIST" command was only given once.
+               So somehow the socket returns te result in multiple chucks and the _parseKeyValueList is
+               triggered multiple times but with only 1 callback and I can figure out how to fix that.
+               so I'm appending all the data as it comes in, the parsing will deduplicate if needed.
+               This approach seems to work, took me about 3 hours to figure it out because debugging needed to happen on the pi env.
+            */
+            let mergedData = '';
             this.send('LIST VAR ' + ups, data => {
-                this._parseKeyValueList(data, 'VAR', /^VAR\s+.+\s+(.+)\s+"(.*)"/, (vars, err) => {
+                mergedData += data;
+                this._parseKeyValueList(mergedData, 'VAR', /^VAR\s+.+\s+(.+)\s+"(.*)"/, (vars, err) => {
                     this.status = 'idle';
                     callback(vars, err);
                 });
@@ -212,8 +221,9 @@ class Nut extends EventEmitter {
         return this._callbackOrPromise(callback, callback => {
             this.send('LIST RW ' + ups, function (data) {
                 this._parseKeyValueList(data, 'RW', /^RW\s+.+\s+(.+)\s+"(.*)"/, (vars, err) => {
+                    const mergedList = { ...vars }
                     this.status = 'idle';
-                    callback(vars, err);
+                    callback(mergedList, err);
                 });
             });
         });
