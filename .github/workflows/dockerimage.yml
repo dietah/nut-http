@@ -1,4 +1,4 @@
-name: '[builder] CI for releases'
+name: 'Build ARMv7'
 
 on:
   push:
@@ -13,7 +13,6 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
-    name: Build on ARMv7
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -26,16 +25,17 @@ jobs:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         run: |
           echo "${DOCKER_PASSWORD}" | docker login --username ${DOCKER_USERNAME} --password-stdin
-      - name: Build docker on armv7 and push to Dockerhub
-        uses: uraimo/run-on-arch-action@v1.0.8
-        id: runcmd
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: crazy-max/ghaction-docker-buildx@v1
+        with:
+          version: latest
+      - name: Build dockerfile (with push)
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-        with:
-          architecture: armv7
-          distribution: ubuntu18.04
-          run: |
-            docker build
-            --output "type=image,push=true" \
-            --file ./Dockerfile . \
-            --tag $(echo "${DOCKER_USERNAME}" | tr '[:upper:]' '[:lower:]')/nut-http:${{ steps.vars.outputs.branch }}
+        run: |
+          docker buildx build \
+          --platform=linux/arm/v7 \
+          --output "type=image,push=true" \
+          --file ./Dockerfile . \
+          --tag $(echo "${DOCKER_USERNAME}" | tr '[:upper:]' '[:lower:]')/nut-http:${{ steps.vars.outputs.branch }}
