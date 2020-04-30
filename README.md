@@ -263,6 +263,9 @@ telegraf.conf example:
 To Visualise the data in Grafana I made the following dashboard based on all the previous names used:
 https://grafana.com/grafana/dashboards/12205
 
+![nut-http dashboard](https://grafana.com/api/dashboards/12205/images/8033/image)
+
 ## Add to the project
 Feel free to add your comments, report issues or make a PR to the project.
+
 I hope this was of some help to at least someone else.
