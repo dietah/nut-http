@@ -225,7 +225,7 @@ If you want your logs to be persistent you can map a volume to `/usr/src/app/log
 ### Docker
 docker run example:
 ```
-docker run -p 3001:3001 -e NUT_ADDRESS=192.168.1.100 -v ~/Documents/tmp/logs:/usr/src/app/logs dietah/nut-http:latest
+docker run -p 3001:3001 -e NUT_ADDRESS=192.168.1.100 -v ~/Documents/tmp/logs:/usr/src/app/logs deetoreu/nut-http:latest
 ```
 or add the detach `-d` flag to run in the background
 
