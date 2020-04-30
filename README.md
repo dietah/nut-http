@@ -222,7 +222,13 @@ If there would be a need I can always include usename & password to access the N
 Everything is logged on the console but also saved to a file per day.
 If you want your logs to be persistent you can map a volume to `/usr/src/app/logs`
 
-### Docker Compose
+### Docker
+docker run example:
+```
+docker run -p 3001:3001 -e NUT_ADDRESS=192.168.1.100 -v ~/Documents/tmp/logs:/usr/src/app/logs dietah/nut-http:latest
+```
+or add the detach `-d` flag to run in the background
+
 docker-compose.yml example:
 ```yaml
 version: '3.6'
@@ -238,6 +244,7 @@ services:
     volumes:
       - ./volumes/nut-http/logs:/usr/src/app/logs
 ```
+apply with `docker-compose -f docker-compose.yml up -d`
 
 ## Metrics
 As mentioned I use Telegraf for metrics, you can now easily use the `[[inputs.http]]` plugin.
