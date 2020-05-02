@@ -1,5 +1,5 @@
 # nut-http
-A HTTP API that wraps output of the upsc command as a JSON output and serves it on an endpoint. Ment to be used in a Docker environment and dependent on `nut-upsd` to serve as data input.
+A HTTP API that wraps output of the upsc command as a JSON output and serves it on an endpoint. Meant to be used in a Docker environment and dependent on `nut-upsd` to serve as data input.
 
 ## Backstory
 Everybody knows what it feels like to set up a server or a Pi or a configuration for that matter with a tutorial, but once it crashes or you need to look into a problem later on you don't know what you did anymore. I'm used to working with a microservice based architecture at work, including Docker and Kubernetes and see the benefits of having something similar at home.
