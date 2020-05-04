@@ -210,7 +210,7 @@ These variables can be passed to the image from kubernetes.yaml or docker-compos
 
 Variable | Default | Description |
 -------- | ------- | ----------- |
-LOG_LEBEL | DEBUG | log4js debug level, choices are: OFF, FATAL, ERROR, WARN, INFO, DEBUG, TRACE, ALL, but I reccomend keeping it on DEBUG
+LOG_LEVEL | DEBUG | log4js debug level, choices are: OFF, FATAL, ERROR, WARN, INFO, DEBUG, TRACE, ALL, but I reccomend keeping it on DEBUG
 SERVER_PORT | 3001 | The port on which to expose this API
 SERVER_TIMEOUT | 2 * 60 * 1000 | Global response timeout for incoming HTTP calls in [ms]
 NUT_ADDRESS | null | The address of your NUT process
