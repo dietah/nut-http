@@ -22,10 +22,10 @@ jobs:
       - name: Get Version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@master
-      - name: Publish to Registry
-        uses: dawidd6/action-docker-publish-changed@v3
+      - name: Build & Publish to Registry
+        uses: dietah/action-docker-publish-changed@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           platforms: linux/amd64,linux/arm64,linux/arm/v7
-          tag: latest
+          tags: latest,${{ steps.package-version.outputs.current-version }}
