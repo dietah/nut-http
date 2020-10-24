@@ -30,12 +30,21 @@ jobs:
         uses: docker/setup-buildx-action@v1
         with:
           version: latest
-      - name: Build dockerfile (with push)
+      - name: Build dockerfile ARMv7 (with push)
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         run: |
           docker buildx build \
-          --platform=linux/arm/v7,linux/arm64 \
+          --platform=linux/arm/v7 \
           --output "type=image,push=true" \
           --file ./Dockerfile . \
+          --tag $(echo "${DOCKER_USERNAME}" | tr '[:upper:]' '[:lower:]')/nut-http:${{ steps.vars.outputs.branch }}
+      - name: Build dockerfile ARM64 (with push)
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        run: |
+          docker buildx build \
+          --platform=linux/arm64 \
+          --output "type=image,push=true" \
+          --file ./Dockerfile-arm64 . \
           --tag $(echo "${DOCKER_USERNAME}" | tr '[:upper:]' '[:lower:]')/nut-http:${{ steps.vars.outputs.branch }}
