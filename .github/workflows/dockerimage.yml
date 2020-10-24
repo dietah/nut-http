@@ -1,4 +1,4 @@
-name: 'Build ARMv7'
+name: 'Build'
 
 on:
   push:
@@ -23,9 +23,9 @@ jobs:
         id: package-version
         uses: martinbeentjes/npm-get-version-action@master
       - name: Publish to Registry
-        uses: elgohr/Publish-Docker-Github-Action@master
+        uses: dawidd6/action-docker-publish-changed@v3
         with:
-          name: ${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          tags: "latest,${{ steps.package-version.outputs.current-version }}"
+          platforms: linux/amd64,linux/arm64,linux/arm/v7
+          tag: latest
