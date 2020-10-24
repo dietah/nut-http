@@ -1,14 +1,12 @@
 FROM node:12-alpine
 EXPOSE 3000
 
-RUN mkdir /home/node/app/ && chown -R node:node /home/node/app
-WORKDIR /home/node/app
+WORKDIR /usr/src/app
 
-COPY --chown=node:node package*.json ./
-USER node
-RUN npm install --only=prod && npm cache clean --force --loglevel=error
+COPY package*.json ./
+RUN npm install
 
-COPY --chown=node:node . /home/node/app
+COPY . /usr/src/app
 ENV NODE_ENV production
 
-CMD [ "node", "index.js" ]
+CMD [ "npm", "start" ]
