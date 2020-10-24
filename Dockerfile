@@ -1,12 +1,14 @@
-FROM arm32v7/node:14.5.0-alpine
+FROM node:12-alpine
 EXPOSE 3000
 
-WORKDIR /usr/src/app
+RUN mkdir /home/node/app/ && chown -R node:node /home/node/app
+WORKDIR /home/node/app
 
-COPY package*.json ./
-RUN npm install
+COPY --chown=node:node package*.json ./
+USER node
+RUN npm install --only=prod && npm cache clean --force --loglevel=error
 
-COPY . /usr/src/app
+COPY --chown=node:node . /home/node/app
 ENV NODE_ENV production
 
-CMD [ "npm", "start" ]
+CMD [ "node", "index.js" ]

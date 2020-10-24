@@ -19,6 +19,9 @@ jobs:
       - name: Set vars
         id: vars
         run: if [ "${GITHUB_REF#refs/*/}" == "master" ]; then echo ::set-output name=branch::latest; else echo ::set-output name=branch::${GITHUB_REF#refs/*/}; fi
+      - name: Get Version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@master
       - name: Dockerhub login
         env:
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
@@ -30,21 +33,12 @@ jobs:
         uses: docker/setup-buildx-action@v1
         with:
           version: latest
-      - name: Build dockerfile ARMv7 (with push)
+      - name: Build docker and push to dockerhub
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         run: |
           docker buildx build \
-          --platform=linux/arm/v7 \
+          --platform=linux/amd64,linux/arm64,linux/ppc64le,linux/s390x,linux/386,linux/arm/v7,linux/arm/v6 \
           --output "type=image,push=true" \
           --file ./Dockerfile . \
-          --tag $(echo "${DOCKER_USERNAME}" | tr '[:upper:]' '[:lower:]')/nut-http:${{ steps.vars.outputs.branch }}
-      - name: Build dockerfile ARM64 (with push)
-        env:
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-        run: |
-          docker buildx build \
-          --platform=linux/arm64 \
-          --output "type=image,push=true" \
-          --file ./Dockerfile-arm64 . \
-          --tag $(echo "${DOCKER_USERNAME}" | tr '[:upper:]' '[:lower:]')/nut-http:${{ steps.vars.outputs.branch }}
+          --tag $(echo "${DOCKER_USERNAME}" | tr '[:upper:]' '[:lower:]')/${{ github.event.repository.name }}:${{ steps.package-version.outputs.current-version }}
