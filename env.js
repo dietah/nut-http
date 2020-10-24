@@ -10,6 +10,8 @@ module.exports = envalid.cleanEnv(process.env, {
 
 	NUT_ADDRESS:	envalid.host({ desc: 'The url or ip address of the NUT server' }),
 	NUT_PORT:		envalid.port({ default: 3493, desc: 'The NUT port' }),
+
+	LOCK_TIMEOUT:	envalid.num({ default: 1000, desc: 'Timeout factor for processing parallel calls, in ms' })
 }, {
 	strict: true
 });

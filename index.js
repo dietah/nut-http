@@ -24,6 +24,8 @@ const server = restify.createServer();
 server.server.setTimeout(config.SERVER_TIMEOUT);
 server.use(restify.plugins.queryParser({ mapParams: false }));
 
+let LOCK = 0;
+
 // some handling
 nut.on('connect', () => {
 	logger.info(`nut connection established to ${config.NUT_ADDRESS}:${config.NUT_PORT}`);
@@ -73,33 +75,38 @@ server.get('/devices/:name', (req, res) => {
 	const ups = req.params.name;
 	logger.logRequest('nut-http.devices.getUps', ups);
 
-	connectNut();
+	setTimeout((req, res) => {
+		connectNut();
 
-	nut
-	.getUpsVars(ups)
-	.then((vars) => {
-		if (req.query.parsed && req.query.parsed === 'true') {
-			vars = parseUpsVars(vars);
-			vars.ups.statusnum = statusses[vars.ups.status];
-		}
+		nut
+			.getUpsVars(ups)
+			.then((vars) => {
+				if (req.query.parsed && req.query.parsed === 'true') {
+					vars = parseUpsVars(vars);
+					vars.ups.statusnum = statusses[vars.ups.status];
+				}
 
-		const endDateTime = moment();
-		logger.debug(`processing took ${time(startDateTime, endDateTime)}`);
+				const endDateTime = moment();
+				logger.debug(`processing took ${time(startDateTime, endDateTime)}`);
 
-		res.send(vars);
-		return vars;
-	})
-	.catch((err) => {
-		if (err === 'UNKNOWN-UPS') {
-			logger.error('unknown ups requested');
-			res.send(404, { code: 404, message: `UPS '${ups}' is not unknown at ${config.NUT_ADDRESS}` });
-			return err;
-		}
+				res.send(vars);
+				if (LOCK > 0) LOCK--;
+				return vars;
+			})
+			.catch((err) => {
+				if (err === 'UNKNOWN-UPS') {
+					logger.error('unknown ups requested');
+					res.send(404, { code: 404, message: `UPS '${ups}' is not unknown at ${config.NUT_ADDRESS}` });
+					return err;
+				}
 
-		logger.error(err);
-		res.send(500, { code: 500, message: `an internal error occurred ${err}` });
-		return err;
-	});
+				logger.error(err);
+				res.send(500, { code: 500, message: `an internal error occurred ${err}` });
+				return err;
+			});
+	}, LOCK * config.LOCK_TIMEOUT, req, res);
+
+	LOCK++;
 });
 
 server.listen(config.SERVER_PORT, () => {
