@@ -25,7 +25,7 @@ jobs:
       - name: Publish to Registry
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
-          name: $(echo "${DOCKER_USERNAME}" | tr '[:upper:]' '[:lower:]')/${{ github.event.repository.name }}
+          name: ${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          tags: ${{ steps.package-version.outputs.current-version }}
+          tags: "latest,${{ steps.package-version.outputs.current-version }}"
