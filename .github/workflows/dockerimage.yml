@@ -9,6 +9,7 @@ on:
       - "package*.json"
       - "Dockerfile"
       - ".github/workflows/dockerimage.yml"
+  workflow_dispatch:
 
 jobs:
   dockerhub:
