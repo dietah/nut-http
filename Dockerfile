@@ -1,4 +1,4 @@
-FROM arm32v7/node
+FROM arm32v7/node:14.5.0-alpine
 EXPOSE 3000
 
 WORKDIR /usr/src/app
