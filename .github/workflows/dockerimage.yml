@@ -29,4 +29,4 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           platforms: linux/amd64,linux/arm64,linux/arm/v7
-          tags: latest,${{ steps.package-version.outputs.current-version }}
+          # tags: latest,${{ steps.package-version.outputs.current-version }}
