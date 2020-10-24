@@ -28,4 +28,4 @@ jobs:
           name: $(echo "${DOCKER_USERNAME}" | tr '[:upper:]' '[:lower:]')/${{ github.event.repository.name }}
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          tags: "latest,${{ steps.package-version.outputs.current-version }}"
+          tags: ${{ steps.package-version.outputs.current-version }}
