@@ -215,6 +215,7 @@ SERVER_PORT | 3001 | The port on which to expose this API
 SERVER_TIMEOUT | 2 * 60 * 1000 | Global response timeout for incoming HTTP calls in [ms]
 NUT_ADDRESS | null | The address of your NUT process
 NUT_PORT | 3493 | The port on which the NUT process is exposed
+LOCK_TIMEOUT | 1000 | When you have more than 1 UPS and you are using Telegraf to scrape the data at the same time this will avoid errors from an already running thread, in [ms]
 
 If there would be a need I can always include usename & password to access the NUT server.
 
