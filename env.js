@@ -15,4 +15,3 @@ module.exports = envalid.cleanEnv(process.env, {
 }, {
 	strict: true
 });
-
