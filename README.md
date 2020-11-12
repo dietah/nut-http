@@ -190,16 +190,9 @@ You can run the code by:
 3. Run `npm start`
 
 ### Docker
-You can build the docker container locally but take note of the cpu architecture you are building it on. The `Dockerfile` is currently configured for ARMv7.
-
-Run the following on a Pi or similar arm architecture:
+You should be able to build the Docker container locally but take note of the cpu architecture you are building it on.
 ```
-make docker
-```
-
-Or if you have `buildx` on your local computer (Docker experimental options):
-```
-make docker-arm
+docker build -t deetoreu/nut-http:latest .
 ```
 
 ## Deployment
@@ -208,14 +201,14 @@ The docker container is available on Docker Hub: https://hub.docker.com/r/deetor
 ### Environment variables
 These variables can be passed to the image from kubernetes.yaml or docker-compose.yml as needed:
 
-Variable | Default | Description |
--------- | ------- | ----------- |
-LOG_LEVEL | DEBUG | log4js debug level, choices are: OFF, FATAL, ERROR, WARN, INFO, DEBUG, TRACE, ALL, but I reccomend keeping it on DEBUG
-SERVER_PORT | 3001 | The port on which to expose this API
-SERVER_TIMEOUT | 2 * 60 * 1000 | Global response timeout for incoming HTTP calls in [ms]
-NUT_ADDRESS | null | The address of your NUT process
-NUT_PORT | 3493 | The port on which the NUT process is exposed
-LOCK_TIMEOUT | 1000 | When you have more than 1 UPS and you are using Telegraf to scrape the data at the same time this will avoid errors from an already running thread, in [ms]
+Variable | Type | Default | Description |
+-------- | ---- | ------- | ----------- |
+LOG_LEVEL | String | DEBUG | log4js debug level, choices are: OFF, FATAL, ERROR, WARN, INFO, DEBUG, TRACE, ALL, but I reccomend keeping it on DEBUG
+SERVER_PORT | Number | 3001 | The port on which to expose this API
+SERVER_TIMEOUT | Number | 2 * 60 * 1000 | Global response timeout for incoming HTTP calls in [ms]
+NUT_ADDRESS | String | null | The address of your NUT process
+NUT_PORT | Number | 3493 | The port on which the NUT process is exposed
+LOCK_TIMEOUT | Number | 1000 | When you have more than 1 UPS and you are using Telegraf to scrape the data at the same time this will avoid errors from an already running thread, in [ms]
 
 If there would be a need I can always include usename & password to access the NUT server.
 
