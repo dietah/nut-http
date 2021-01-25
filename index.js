@@ -5,7 +5,8 @@ const { parseList, time, parseUpsVars } = require('./helpers');
 const NUT = require('./node-nut');
 const config = require('./env');
 
-logger.info('environment variables:\n', config);
+const consoleConfig = { ...config, NUT_USERNAME: '[REDACTED]', NUT_PASSWORD: '[REDACTED]' };
+logger.info('environment variables:\n', consoleConfig);
 
 // nut settings
 const nut = new NUT(config.NUT_PORT, config.NUT_ADDRESS);
@@ -113,6 +114,14 @@ server.listen(config.SERVER_PORT, () => {
 	logger.info(`nut-http listening on port ${config.SERVER_PORT}`);
 });
 
-function connectNut() {
-	if (!nut.connected) nut.connect();
+async function connectNut() {
+	if (!nut.connected) {
+		try {
+			if (config.NUT_USERNAME) await nut.setUsername(config.NUT_USERNAME);
+			if (config.NUT_PASSWORD) await nut.setPassword(config.NUT_PASSWORD);
+			nut.connect();
+		} catch (error) {
+			logger.error(`connection error`);
+		}
+	}
 }

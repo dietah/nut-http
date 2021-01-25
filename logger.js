@@ -40,13 +40,7 @@ module.exports = {
 };
 
 function logRequest(request, entity) {
-	request = request.split('.');
-
-	// const api = request[0];
-	const model = request[1];
-	const method = request[2];
-
-	// logger.debug('%s.%s - received %s%s', api, model, method, (entity ? ` for ${entity}` : ''));
+	const [ name, model, method ] = request.split('.');
 	logger.debug(`received ${method.toUpperCase()} /${model} ${entity ? `for ${entity}` : ''}`);
 }
 

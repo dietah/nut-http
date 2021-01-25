@@ -206,8 +206,10 @@ Variable | Type | Default | Description |
 LOG_LEVEL | String | DEBUG | log4js debug level, choices are: OFF, FATAL, ERROR, WARN, INFO, DEBUG, TRACE, ALL, but I reccomend keeping it on DEBUG
 SERVER_PORT | Number | 3001 | The port on which to expose this API
 SERVER_TIMEOUT | Number | 2 * 60 * 1000 | Global response timeout for incoming HTTP calls in [ms]
-NUT_ADDRESS | String | null | The address of your NUT process
+NUT_ADDRESS | String |  | The address of your NUT process
 NUT_PORT | Number | 3493 | The port on which the NUT process is exposed
+NUT_USERNAME | String |  | Optional, username for the NUT server in case it is secured
+NUT_PASSWORD | String |  | Optional, password for the NUT server in case it is secured
 LOCK_TIMEOUT | Number | 1000 | When you have more than 1 UPS and you are using Telegraf to scrape the data at the same time this will avoid errors from an already running thread, in [ms]
 
 If there would be a need I can always include usename & password to access the NUT server.
