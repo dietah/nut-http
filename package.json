@@ -27,7 +27,7 @@
   "homepage": "https://github.com/dietah/nut-http#readme",
   "dependencies": {
     "envalid": "^6.0.1",
-    "log4js": "^6.2.1",
+    "log4js": "^6.4.0",
     "moment": "^2.24.0",
     "moment-duration-format": "^2.3.2",
     "restify": "^8.5.1",
