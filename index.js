@@ -16,6 +16,7 @@ const nut = new NUT(config.NUT_PORT, config.NUT_ADDRESS);
 const statusses = Object.freeze({
 	OL: 1, // online
 	'OL CHRG': 2, // online & charging
+	'OL CHRG LB': 2, // online low battery
 	'OB DISCHRG': 3, // on battery
 	LB: 4, // low battery,
 	SD: 5 // shutdown load
