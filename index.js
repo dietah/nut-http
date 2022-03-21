@@ -121,7 +121,7 @@ async function connectNut() {
 			if (config.NUT_PASSWORD) await nut.setPassword(config.NUT_PASSWORD);
 			nut.connect();
 		} catch (error) {
-			logger.error(`connection error`);
+			logger.error('connection error');
 		}
 	}
 }
