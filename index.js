@@ -5,6 +5,8 @@ const { parseList, time, parseUpsVars } = require('./helpers');
 const NUT = require('./node-nut');
 const config = require('./env');
 
+logger.setLevel(config.LOG_LEVEL);
+
 const consoleConfig = { ...config, NUT_USERNAME: '[REDACTED]', NUT_PASSWORD: '[REDACTED]' };
 logger.info('environment variables:\n', consoleConfig);
 

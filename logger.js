@@ -30,6 +30,7 @@ const logger = log4js.getLogger('nut-http');
 // If you for example set the logging level to WARN all warnings, errors and fatals are logged
 
 module.exports = {
+	setLevel,
 	logRequest,
 	trace,
 	info,
@@ -38,6 +39,10 @@ module.exports = {
 	error,
 	line
 };
+
+function setLevel(level) {
+	logger.level = level;
+}
 
 function logRequest(request, entity) {
 	const [ name, model, method ] = request.split('.');
