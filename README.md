@@ -179,6 +179,7 @@ Status | Number | Description |
 ------ | ------ | ----------- |
 OL | 1 | Online
 OL CHRG | 2 | Online & Charging
+OL CHRG LB | 2 | Online Low Battery
 OB DISCHRG | 3 | On Battery
 LB | 4 | Low Battery
 SD | 5 | Shutdown Load
