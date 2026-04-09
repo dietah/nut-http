@@ -1,5 +1,5 @@
 FROM node:12-alpine
-EXPOSE 3000
+EXPOSE 3001
 
 WORKDIR /usr/src/app
 
